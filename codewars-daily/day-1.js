@@ -23,6 +23,14 @@ function pipeFix(numbers) {
   return result;
 }
 
+// function pipeFix(numbers) {
+//   const [firstNumber, lastNumber] = [numbers[0], numbers[numbers.length - 1]];
+//   return Array.from(
+//     { length: lastNumber - firstNumber + 1 },
+//     (_, i) => firstNumber + i
+//   );
+// }
+
 console.log(pipeFix([1, 3, 5, 6]));
 
 // ! _________________Task 2____________________
