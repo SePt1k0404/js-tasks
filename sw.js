@@ -5,7 +5,6 @@ self.addEventListener("install", (event) => {
       return cache.addAll([
         "./trello-tasks-html/task-8.html",
         "./trello-tasks/task-8/task-8.js",
-        "./css/reset.css",
       ]);
     })
   );
@@ -28,8 +27,16 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        const networkResponseClone = networkResponse.clone();
+        caches.open("my-cache").then((cache) => {
+          cache.put(event.request, networkResponseClone);
+        });
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
