@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trello task 7</title>
+    <link href="../css/reset.css" rel="stylesheet" />
+    <link href="../css/trello-task-7.css" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="form-wrapper">
+      <form class="reg-form">
+        <h1 class="reg-form__title">Register form</h1>
+        <div class="reg-form__wrapper">
+          <label>
+            Name:
+            <input
+              class="reg-form__input name"
+              name="name"
+              type="text"
+              placeholder="Tom"
+            />
+            <ul class="hint hidden" id="nameHint">
+              <li class="invalid" id="lengthHint">Enter your name</li>
+            </ul>
+            <ul class="hint errorHint hidden" id="errorNameHint">
+              <li class="invalid" id="noNumberHint">
+                Name should contain only letters
+              </li>
+            </ul>
+          </label>
+
+          <label>
+            Email:
+            <input
+              class="reg-form__input email"
+              name="email"
+              type="text"
+              placeholder="example@mail.com"
+              autocomplete="false"
+            />
+            <ul class="hint hidden" id="emailHint">
+              <li class="invalid" id="lengthHint">
+                Enter your valid email address
+              </li>
+            </ul>
+            <ul class="hint errorHint hidden" id="errorEmailHint">
+              <li class="invalid">
+                Email is incorrect. Please enter a valid email address (e.g.,
+                example@domain.com).
+              </li>
+            </ul>
+          </label>
+          <label>
+            Password:
+            <input
+              class="reg-form__input password"
+              name="password"
+              type="password"
+            />
+            <ul class="hint hidden" id="passwordHint">
+              <li class="invalid" id="lengthHint">At least 6 characters</li>
+              <li class="invalid" id="numberHint">
+                Must include at least one number
+              </li>
+            </ul>
+            <button class="reg-form__submit">Submit</button>
+          </label>
+        </div>
+      </form>
+    </section>
+    <script src="../trello-tasks/task-7/task-7.js"></script>
+  </body>
+</html>
