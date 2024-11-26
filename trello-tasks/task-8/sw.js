@@ -13,17 +13,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   console.log("SW activated");
   const cacheWhitelist = [myCacheName];
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+  event.waitUntil(cleanOldCaches(cacheWhitelist));
 });
 
 self.addEventListener("fetch", (evt) => {
@@ -63,8 +53,23 @@ self.addEventListener("fetch", (evt) => {
 });
 
 function timeOut(promise, ms) {
-  const timeout = new Promise((_, rejected) => {
-    setTimeout(() => rejected(new Error("Request timed out")), ms);
-  });
-  return Promise.race([promise, timeout]);
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Request timed out")), ms)
+    ),
+  ]);
+}
+
+function cleanOldCaches(whitelist) {
+  return caches.keys().then((cacheNames) =>
+    Promise.all(
+      cacheNames.map((cacheName) => {
+        if (!whitelist.includes(cacheName)) {
+          console.log(`Deleting old cache: ${cacheName}`);
+          return caches.delete(cacheName);
+        }
+      })
+    )
+  );
 }
