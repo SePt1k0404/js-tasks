@@ -1,0 +1,186 @@
+body {
+  background-color: blanchedalmond;
+}
+
+.gallery__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 40px;
+}
+
+.gallery__title {
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.photo-list {
+  height: 745px;
+  padding: 10px;
+  width: 100%;
+  background-color: cadetblue;
+  border: 4px solid rgb(110, 103, 103);
+  border-radius: 10px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 355px;
+  grid-auto-rows: 355px;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.photo-list__item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  background-color: darkgray;
+  padding-bottom: 10px;
+}
+
+.photo-list__img {
+  width: 100%;
+  height: 325px;
+  object-fit: cover;
+}
+
+.photo-list__item > p {
+  overflow: hidden;
+  height: 20px;
+  padding: 0 10px;
+}
+
+.photo-list__remove {
+  content: "";
+  display: block;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: red;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(50%, -50%);
+}
+
+.add-photo {
+  border-radius: 12px;
+  border: none;
+  padding: 20px;
+  background-color: aquamarine;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.form-backdrop {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.466);
+}
+
+.add-photo-form {
+  width: 500px;
+  padding: 50px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.add-photo-form label {
+  width: 100%;
+}
+
+.add-photo-form input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.add-photo-form__submit {
+  padding: 10px;
+  font-size: 18px;
+}
+
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.lightbox-backdrop {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.466);
+}
+
+.lightbox__thumb {
+  width: 550px;
+  height: auto;
+  background-color: rgb(82, 83, 83);
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.lightbox__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.lightbox__thumb > p {
+  max-height: 50px;
+  overflow: auto;
+  color: white;
+}
+
+.lightbox__buttons-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lightbox__buttons-wrapper .button {
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+  cursor: pointer;
+}

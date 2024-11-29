@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trello task 12. Project 0</title>
+    <link rel="stylesheet" href="../../../css/reset.css" />
+    <link rel="stylesheet" href="./project-0.css" />
+  </head>
+  <body>
+    <section class="gallery">
+      <div class="gallery__wrapper">
+        <h1 class="gallery__title">Your gallery:</h1>
+        <ul class="photo-list"></ul>
+        <button class="add-photo">Add new photo</button>
+      </div>
+      <div class="form-backdrop is-hidden">
+        <form class="add-photo-form" action="submit">
+          <h2 class="add-photo-form__title">Add new photo:</h2>
+
+          <label>
+            Url:
+            <input class="add-photo-form__url" name="url" type="url" />
+          </label>
+          <label>
+            Description:
+            <input
+              class="add-photo-form__desc"
+              name="description"
+              type="text"
+            />
+          </label>
+          <button class="add-photo-form__submit add-photo">
+            Add new photo
+          </button>
+        </form>
+      </div>
+      <div class="lightbox-backdrop is-hidden"></div>
+    </section>
+    <script src="./project-0.js"></script>
+  </body>
+</html>
