@@ -39,7 +39,7 @@ const EBook = function ({ title, author, year, fileSize } = {}) {
   };
 };
 
-EBook.prototype = { ...Book.prototype };
+EBook.prototype = Object.create(Book.prototype);
 EBook.prototype.constructor = EBook;
 
 const book1 = new Book({
