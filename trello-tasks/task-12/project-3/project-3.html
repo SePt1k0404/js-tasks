@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trello task 12. Project 3</title>
+    <link href="../../../css/reset.css" rel="stylesheet" />
+    <link href="./project-3.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>Phone book:</h1>
+    <div class="search-container">
+      <input class="search__input" type="text" placeholder="Search contacts:" />
+    </div>
+    <div class="form-container">
+      <form class="contact-form">
+        <input
+          class="contact__name"
+          name="contactName"
+          type="text"
+          placeholder="Name"
+          required
+        />
+        <input
+          class="contact__phone"
+          name="contactTel"
+          type="tel"
+          title="Please enter a valid phone number"
+          placeholder="Phone number"
+          required
+          maxlength="13"
+          pattern="^\+?[0-9]{1,4}?[0-9]{7,15}$"
+        />
+        <button type="submit">Add contact</button>
+      </form>
+    </div>
+    <ul class="contact-list"></ul>
+    <script src="./project-3.js"></script>
+  </body>
+</html>

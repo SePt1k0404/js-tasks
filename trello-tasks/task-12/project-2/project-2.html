@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trello task 12. Project 2</title>
+    <link href="../../../css/reset.css" rel="stylesheet" />
+    <link href="./project-2.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>Task List</h1>
+    <ul class="button-list">
+      <li class="button-list__item">
+        <button class="button-list__filter active" data-type="all">All</button>
+      </li>
+      <li class="button-list__item">
+        <button class="button-list__filter" data-type="completed">
+          Completed
+        </button>
+      </li>
+      <li class="button-list__item">
+        <button class="button-list__filter" data-type="uncompleted">
+          Uncompleted
+        </button>
+      </li>
+    </ul>
+    <form class="form-group" id="task-form">
+      <input
+        id="task-input"
+        name="task"
+        type="text"
+        placeholder="Add a new task..."
+        required
+      />
+      <button class="form-group__button" type="submit">Add</button>
+    </form>
+    <ul class="task-list" id="task-list"></ul>
+    <script src="./project-2.js"></script>
+  </body>
+</html>

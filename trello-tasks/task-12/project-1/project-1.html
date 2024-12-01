@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trello task 12. Project 1</title>
+    <link rel="stylesheet" href="../../../css/reset.css" />
+    <link rel="stylesheet" href="./project-1.css" />
+  </head>
+  <body>
+    <div class="calendar-wrapper">
+      <div class="calendar__text-content-wrapper">
+        <h1 class="calendar__month"></h1>
+        <h2 class="calendar__year"></h2>
+      </div>
+      <ul class="calendar-list"></ul>
+      <div class="calendar__navigation-buttons">
+        <button class="calendar__left-button button">⬅</button>
+        <button class="calendar__right-button button">⮕</button>
+      </div>
+      <div class="events-wrapper">
+        <h2 class="events__title">
+          Events in <span class="events__title-change"></span>
+        </h2>
+        <ul class="events-list"></ul>
+        <form class="events__new-field">
+          <input class="events__input" name="eventName" type="text" />
+          <button class="events__button">Add new event</button>
+        </form>
+      </div>
+    </div>
+    <script src="./project-1.js"></script>
+  </body>
+</html>
