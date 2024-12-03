@@ -1,0 +1,64 @@
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(120deg, #a6c0fe, #f68084);
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 1.5rem 0;
+  background: #6200ea;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+#map-container {
+  flex: 1;
+  max-height: 300px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 2px solid #333;
+  background: #e1e1e1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#audio-controls {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+#audio-player {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 5px;
+}
+
+footer {
+  text-align: center;
+  background: #6200ea;
+  color: white;
+  padding: 1rem 0;
+}
