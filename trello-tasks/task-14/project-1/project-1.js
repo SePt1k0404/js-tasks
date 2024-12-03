@@ -11,7 +11,7 @@ const refs = {
   userList: document.getElementById("users-list"),
 };
 
-const socket = new WebSocket("ws://localhost:8080");
+const socket = new WebSocket("ws://localhost:8099");
 
 const sendMessage = () => {
   const message = refs.messageInput.value;
