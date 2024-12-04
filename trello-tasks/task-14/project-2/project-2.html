@@ -10,18 +10,16 @@
   </head>
   <body>
     <main>
-      <h1>Location-Based Audio Guide</h1>
-      <section id="map-container">
-        <div id="map"></div>
-      </section>
-      <section id="audio-controls">
-        <h2>Audio Guide</h2>
-        <p id="location-info">Detecting your location...</p>
+      <p id="location-info">Detecting your location...</p>
+      <button id="enable-audio">Enable Audio</button>
+      <div id="map"></div>
+      <div id="current-track">
+        <p>Current track: <span id="track-name">None</span></p>
         <audio id="audio-player" controls>
           <source id="audio-source" src type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
-      </section>
+      </div>
     </main>
     <script src="./project-2.js"></script>
   </body>
