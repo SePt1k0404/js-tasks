@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google docs task 4. Budget calculator</title>
+    <link href="../../css/reset.css" rel="stylesheet" />
+    <link href="./task-4.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Budget Calculator</h1>
+        <div class="balance">
+          <h2>Balance: <span id="balance">0</span> UAH</h2>
+        </div>
+      </header>
+
+      <main class="main">
+        <form class="entry-form" id="entry-form">
+          <input
+            id="amount"
+            name="amount"
+            type="number"
+            placeholder="Amount"
+            required
+          />
+
+          <select id="type" name="type" required>
+            <option value disabled selected>Select Type</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+
+          <input
+            id="category"
+            name="category"
+            type="text"
+            title="(e.g., Food, Salary)"
+            placeholder="Category..."
+            required
+          />
+
+          <input name="date" id="date" type="date" required />
+          <button type="submit">Add Entry</button>
+        </form>
+
+        <div class="entries">
+          <h2>Entries</h2>
+          <ul id="entry-list"></ul>
+        </div>
+      </main>
+    </div>
+    <script src="./task-4.js"></script>
+  </body>
+</html>
