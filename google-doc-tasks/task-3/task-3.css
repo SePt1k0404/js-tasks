@@ -4,6 +4,7 @@ body {
   padding: 0;
   background: #f4f7fc;
   color: #333;
+  overflow: auto;
 }
 
 h1 {
@@ -149,4 +150,8 @@ button:hover {
 .task-item.progressed .task-status {
   color: #ffc107;
   font-weight: bold;
+}
+
+.hidden {
+  display: none;
 }
