@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google docs task 3. Task management system</title>
+    <link href="../../css/reset.css" rel="stylesheet" />
+    <link href="./task-3.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <h1>Task Manager</h1>
+    </header>
+
+    <main>
+      <form class="task-form">
+        <label class="sr-only" for="description">Task description</label>
+        <input
+          id="description"
+          type="text"
+          name="task"
+          placeholder="Task description"
+          required
+        />
+        <label class="sr-only" for="priority">Priority</label>
+        <select id="priority" name="prior">
+          <option value="1">High</option>
+          <option value="2">Medium</option>
+          <option value="3">Low</option>
+        </select>
+        <button class="button add">Add Task</button>
+      </form>
+
+      <section class="buttons-container">
+        <button class="button priority">Sort by Priority</button>
+        <button class="button all">Show All</button>
+        <button class="button new">Filter New</button>
+        <button class="button progress">Filter In Progress</button>
+        <button class="button completed">Filter Completed</button>
+      </section>
+
+      <section class="task-list" id="task-list"></section>
+    </main>
+
+    <script src="./task-3.js"></script>
+  </body>
+</html>

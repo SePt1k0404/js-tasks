@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google docs task 2. Weather forecasts</title>
+    <link href="../../css/reset.css" rel="stylesheet" />
+    <link href="./task-2.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather Station</h1>
+      <div class="weather-data">
+        <label for="temperature">Temperature (°C):</label>
+        <input id="temperature" type="number" placeholder="Enter temperature" />
+
+        <label for="humidity">Humidity (%):</label>
+        <input id="humidity" type="number" placeholder="Enter humidity" />
+
+        <label for="pressure">Pressure (mm Hg):</label>
+        <input id="pressure" type="number" placeholder="Enter pressure" />
+
+        <button id="updateWeatherButton">Update Weather Data</button>
+      </div>
+
+      <div class="forecast" id="weatherForecast">
+        <h2>Weather Forecast:</h2>
+        <p class="forecastResult">Select data to get the forecast...</p>
+      </div>
+    </div>
+    <script src="./task-2.js"></script>
+  </body>
+</html>
