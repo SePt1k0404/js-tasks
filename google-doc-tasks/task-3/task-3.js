@@ -26,21 +26,18 @@ const refs = {
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
+const taskStatusText = {
+  1: "High",
+  2: "Medium",
+  3: "Low",
+};
+
 const createTaskCard = (data) => {
-  refs.taskList.insertAdjacentHTML(
-    "afterbegin",
-    `
-    <article class="task-item" data-id=${data.id} data-prior=${Number(
-      data.prior
-    )}>
+  const taskPriority = taskStatusText[data.prior] || "Low";
+  return `
+    <article class="task-item" data-id="${data.id}" data-prior="${data.prior}">
       <header class="task-header">Task Title: ${data.task}</header>
-      <p class="task-priority">Priority: ${
-        Number(data.prior) === 1
-          ? "High"
-          : Number(data.prior) === 2
-          ? "Medium"
-          : "Low"
-      }</p>
+      <p class="task-priority">Priority: ${taskPriority}</p>
       <p class="task-status">Status: ${capitalize(data.progress)}</p>
       <footer class="task-actions">
         <button class="in-prog">In progress</button>
@@ -48,27 +45,23 @@ const createTaskCard = (data) => {
         <button class="delete">Delete</button>
       </footer>
     </article>
-    `
-  );
+  `;
 };
 
 const updateTaskInList = (id, status) => {
-  const localStorageList = [...storage.get()];
-  const taskIndex = localStorageList.findIndex((task) => task.id === id);
-  if (taskIndex !== -1) {
-    localStorageList[taskIndex].progress = status;
-  }
+  const localStorageList = storage.get();
+  const task = localStorageList.find((task) => task.id === id);
+  if (task) task.progress = status;
   storage.set(localStorageList);
 };
 
 const filterByStatus = (status) => {
-  const taskListHTML = [...refs.taskList.children];
-  taskListHTML.forEach((task) => {
-    task.classList.remove("hidden");
+  [...refs.taskList.children].forEach((task) => {
     const taskStatus = task.querySelector(".task-status").innerText;
-    if (status && taskStatus !== `Status: ${status}`) {
-      task.classList.add("hidden");
-    }
+    task.classList.toggle(
+      "hidden",
+      status && taskStatus !== `Status: ${status}`
+    );
   });
 };
 
@@ -97,30 +90,30 @@ const filterCards = (filter) => {
   }
 };
 
-refs.taskForm.addEventListener("submit", (evt) => {
+const handleTaskFormSubmit = (evt) => {
   evt.preventDefault();
   const formData = new FormData(refs.taskForm);
   const taskData = {
     id: crypto.randomUUID(),
-    progress: "new",
+    progress: "New",
   };
-  for (const [key, value] of formData.entries()) {
+  formData.forEach((value, key) => {
     taskData[key] = value;
-  }
-  const localStorageList = [...storage.get()];
+  });
+  const localStorageList = storage.get();
   localStorageList.push(taskData);
   storage.set(localStorageList);
-  createTaskCard(taskData);
+  refs.taskList.insertAdjacentHTML("afterbegin", createTaskCard(taskData));
   evt.target.reset();
-});
+};
 
-refs.taskList.addEventListener("click", (evt) => {
+const handleTaskClick = (evt) => {
   const currentCard = evt.target.closest(".task-item");
   const taskId = currentCard.dataset.id;
+  const localStorageList = storage.get();
 
   if (evt.target.classList.contains("delete")) {
     currentCard.remove();
-    const localStorageList = [...storage.get()];
     const taskIndex = localStorageList.findIndex((task) => task.id === taskId);
     if (taskIndex !== -1) localStorageList.splice(taskIndex, 1);
     storage.set(localStorageList);
@@ -130,7 +123,7 @@ refs.taskList.addEventListener("click", (evt) => {
     currentCard.classList.add("completed");
     currentCard.classList.remove("progressed");
     currentCard.querySelector(".task-status").innerText = "Status: Completed";
-    updateTaskInList(taskId, "completed");
+    updateTaskInList(taskId, "Completed");
   }
 
   if (evt.target.classList.contains("in-prog")) {
@@ -139,36 +132,40 @@ refs.taskList.addEventListener("click", (evt) => {
     currentCard.querySelector(".task-status").innerText = "Status: In progress";
     updateTaskInList(taskId, "In progress");
   }
-});
+};
 
-refs.buttonsContainer.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("all")) {
-    filterCards();
-  } else if (evt.target.classList.contains("priority")) {
-    filterCards("priority");
-  } else if (evt.target.classList.contains("new")) {
-    filterCards("new");
-  } else if (evt.target.classList.contains("progress")) {
-    filterCards("progress");
-  } else if (evt.target.classList.contains("completed")) {
-    filterCards("completed");
-  }
-});
+const handleFilterClick = (evt) => {
+  const filter = evt.target.classList.contains("all")
+    ? undefined
+    : evt.target.classList.contains("priority")
+    ? "priority"
+    : evt.target.classList.contains("new")
+    ? "new"
+    : evt.target.classList.contains("progress")
+    ? "progress"
+    : evt.target.classList.contains("completed")
+    ? "completed"
+    : undefined;
 
-window.addEventListener("load", () => {
-  const localStorageList = [...storage.get()];
-  if (localStorageList.length !== 0) {
+  filterCards(filter);
+};
+
+const handlePageLoad = () => {
+  const localStorageList = storage.get();
+  if (localStorageList.length > 0) {
     localStorageList.forEach((task) => {
-      createTaskCard(task);
+      refs.taskList.insertAdjacentHTML("afterbegin", createTaskCard(task));
     });
     [...refs.taskList.children].forEach((task) => {
       const taskStatus = task.querySelector(".task-status").innerText;
-      console.log(taskStatus);
-      if (taskStatus === `Status: In progress`) {
+      if (taskStatus === "Status: In progress")
         task.classList.add("progressed");
-      } else if (taskStatus === `Status: Completed`) {
-        task.classList.add("completed");
-      }
+      if (taskStatus === "Status: Completed") task.classList.add("completed");
     });
   }
-});
+};
+
+refs.taskForm.addEventListener("submit", handleTaskFormSubmit);
+refs.taskList.addEventListener("click", handleTaskClick);
+refs.buttonsContainer.addEventListener("click", handleFilterClick);
+window.addEventListener("load", handlePageLoad);
