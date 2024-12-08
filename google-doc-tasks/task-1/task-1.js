@@ -1,123 +1,204 @@
+"use strict";
+
+const refs = {
+  playerHealthBar: document.getElementById("player-health"),
+  monsterHealthBar: document.getElementById("monster-health"),
+  playerName: document.querySelector(".player-name"),
+  monsterName: document.querySelector(".monster-name"),
+  monster: document.querySelector(".monster"),
+  treasure: document.querySelector(".treasure"),
+  playerStats: document.getElementById("player-stats"),
+  monsterStats: document.getElementById("monster-stats"),
+  playerDamage: document.getElementById("player-damage"),
+  monsterDamage: document.getElementById("monster-damage"),
+  playerMedicineCount: document.getElementById("player-medicine-count"),
+  gameResult: document.getElementById("game-result"),
+};
+
 const player = {
   userName: "CoolBoy",
+  maxHealth: 100,
   healPoints: 100,
   power: 20,
-  medicine: [15, 15],
+  medicine: [60, 60],
   item: "",
-
   attack(enemy) {
     enemy.healPoints -= this.power;
-    console.log(
-      `${this.userName} attacks ${enemy.type} for ${this.power} damage!`
-    );
+    enemy.healPoints = Math.max(enemy.healPoints, 0);
   },
-
   heal() {
     if (this.medicine.length > 0) {
       this.healPoints += this.medicine.shift();
-      console.log(`${this.userName} healed and now has ${this.healPoints} HP!`);
-    } else {
-      console.log(`${this.userName} has no medicine left!`);
+      this.healPoints = Math.min(this.healPoints, this.maxHealth);
     }
   },
 };
 
-const monster = {
-  type: "Goblin",
-  healPoints: 10,
-  power: 1,
-  attack(player) {
-    player.healPoints -= this.power;
-    console.log(
-      `${this.type} attacks ${player.userName} for ${this.power} damage!`
-    );
-  },
-};
-
-const item = {
-  itemName: "",
-  type: "",
-  power: 0,
-};
-
-const swordItem = Object.assign({}, item, {
-  itemName: "Common Iron Sword",
-  type: "weapon",
-  power: 30,
-});
-
-const healPotion = Object.assign({}, item, {
-  itemName: "Angels Tears",
-  type: "medicine",
-  power: 50,
-});
-
-const fight = (player, monster) => {
-  return new Promise((resolve) => {
-    const interval = setInterval(() => {
-      if (player.healPoints <= 0 || monster.healPoints <= 0) {
-        clearInterval(interval);
-        const winner = player.healPoints > 0 ? player : monster;
-        console.log(
-          `The winner is ${winner.userName || winner.type}! Remaining HP: ${
-            winner.healPoints
-          }`
-        );
-        resolve({
-          winner: winner.userName || winner.type,
-          healPoints: winner.healPoints,
-        });
-      } else {
-        player.attack(monster);
-        if (monster.healPoints > 0) {
-          monster.attack(player);
-        }
-      }
-    }, 1000);
-  });
-};
-
-const startGame = async () => {
-  console.log("Welcome to the adventure game!");
-  console.log("You are starting your journey. Be prepared to face monsters!");
-
-  while (player.healPoints > 0) {
-    const enemy = Object.assign({}, monster, {
-      type: "Goblin",
-      healPoints: 20 + Math.floor(Math.random() * 100),
-      power: 5 + Math.floor(Math.random() * 50),
-    });
-
-    console.log(`A wild ${enemy.type} appears!`);
-    console.log(
-      `${enemy.type} stats: HP: ${enemy.healPoints}, Power: ${enemy.power}`
-    );
-
-    const result = await fight(player, enemy);
-    console.log(result);
-    if (player.healPoints > 0) {
-      if (player.healPoints < 70) {
-        player.heal();
-      }
-      if (Math.random() > 0.5) {
-        console.log(`You found a ${healPotion.itemName}!`);
-        player.medicine.push(healPotion.power);
-      } else {
-        console.log(`You found a ${swordItem.itemName}!`);
-        if (player.item !== swordItem.itemName) {
-          player.power += swordItem.power;
-          player.item = swordItem.itemName;
-          console.log(`Your power increased to ${player.power}!`);
-        } else {
-          console.log("You already have this item!");
-        }
-      }
-
-      console.log("You move forward and prepare for the next fight...");
-    } else {
-      console.log("You have been defeated. Game over!");
-    }
+const createMonster = (type) => {
+  switch (type) {
+    case "goblin":
+      return {
+        type: "Goblin",
+        maxHealth: 50,
+        healPoints: 50,
+        power: 10,
+        image: "./assets/goblin.png",
+        attack(player) {
+          player.healPoints -= this.power;
+          player.healPoints = Math.max(player.healPoints, 0);
+        },
+      };
+    case "ogre":
+      return {
+        type: "Ogre",
+        maxHealth: 150,
+        healPoints: 150,
+        power: 30,
+        image: "./assets/ogre.png",
+        attack(player) {
+          player.healPoints -= this.power;
+          player.healPoints = Math.max(player.healPoints, 0);
+        },
+      };
+    case "dragon":
+      return {
+        type: "Dragon",
+        maxHealth: 300,
+        healPoints: 300,
+        power: 50,
+        image: "./assets/dragon.png",
+        attack(player) {
+          player.healPoints -= this.power;
+          player.healPoints = Math.max(player.healPoints, 0);
+        },
+      };
+    default:
+      return {};
   }
 };
 
-startGame();
+let currentMonster = createMonster("goblin");
+
+const spawnTreasure = () => {
+  refs.treasure.style.opacity = 1;
+
+  if (Math.random() >= 0.7) {
+    refs.treasure.setAttribute("src", "./assets/sword.png");
+    player.power += 80;
+    refs.playerDamage.innerText = player.power;
+  } else {
+    refs.treasure.setAttribute("src", "./assets/healPotion.png");
+    player.medicine.push(100);
+    refs.playerMedicineCount.innerText = player.medicine.length;
+  }
+
+  setTimeout(() => {
+    refs.treasure.style.opacity = 0;
+  }, 1500);
+};
+
+const updateHealthBar = (bar, currentHP, maxHP) => {
+  const percentage = (currentHP / maxHP) * 100;
+  bar.style.width = `${percentage}%`;
+};
+
+let isAttackInProgress = false;
+
+window.addEventListener("load", () => {
+  refs.playerName.innerText = `Player: ${player.userName}`;
+  refs.monsterName.innerText = `Monster: ${currentMonster.type}`;
+  refs.playerDamage.innerText = player.power;
+  refs.monsterDamage.innerText = currentMonster.power;
+  refs.playerMedicineCount.innerText = player.medicine.length;
+});
+
+document.addEventListener("keydown", (evt) => {
+  if (
+    evt.code === "Space" &&
+    !isAttackInProgress &&
+    player.healPoints > 0 &&
+    currentMonster.healPoints > 0
+  ) {
+    isAttackInProgress = true;
+    player.attack(currentMonster);
+    updateHealthBar(
+      refs.monsterHealthBar,
+      currentMonster.healPoints,
+      currentMonster.maxHealth
+    );
+
+    const fireball = document.getElementById("fireball");
+    fireball.style.opacity = 1;
+    fireball.style.left = "70%";
+    setTimeout(() => {
+      fireball.style.opacity = 0;
+      fireball.style.left = "10%";
+    }, 1000);
+
+    if (currentMonster.healPoints > 0) {
+      setTimeout(() => {
+        currentMonster.attack(player);
+        updateHealthBar(
+          refs.playerHealthBar,
+          player.healPoints,
+          player.maxHealth
+        );
+        const monsterFireball = document.getElementById("monster-fireball");
+        monsterFireball.style.opacity = 1;
+        monsterFireball.style.left = "10%";
+        setTimeout(() => {
+          monsterFireball.style.opacity = 0;
+          monsterFireball.style.left = "70%";
+        }, 1000);
+
+        if (player.healPoints <= 0) {
+          refs.gameResult.innerText = "Game Over! Monster wins!";
+        }
+
+        isAttackInProgress = false;
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        const monsterImg = refs.monster.querySelector("img");
+        monsterImg.setAttribute("src", currentMonster.image);
+        refs.monster.style.marginBottom = "140px";
+        refs.monster.style.transform = "rotateY(0deg)";
+        if (currentMonster.type === "Goblin") {
+          currentMonster = createMonster("ogre");
+          refs.monsterName.innerText = `Monster: ${currentMonster.type}`;
+          refs.monster
+            .querySelector("img")
+            .setAttribute("src", currentMonster.image);
+          refs.monster.style.marginBottom = "250px";
+          refs.monster.style.transform = "rotateY(180deg)";
+          updateHealthBar(
+            refs.monsterHealthBar,
+            currentMonster.healPoints,
+            currentMonster.maxHealth
+          );
+        } else if (currentMonster.type === "Ogre") {
+          currentMonster = createMonster("dragon");
+          refs.monsterName.innerText = `Monster: ${currentMonster.type}`;
+          refs.monster
+            .querySelector("img")
+            .setAttribute("src", currentMonster.image);
+          updateHealthBar(
+            refs.monsterHealthBar,
+            currentMonster.healPoints,
+            currentMonster.maxHealth
+          );
+        } else if (currentMonster.type === "Dragon") {
+          refs.gameResult.innerText = "Game Over! You win!";
+        }
+        isAttackInProgress = false;
+        spawnTreasure();
+      }, 1000);
+    }
+  }
+
+  if (evt.code === "ControlLeft" || evt.code === "ControlRight") {
+    player.heal();
+    updateHealthBar(refs.playerHealthBar, player.healPoints, player.maxHealth);
+    refs.playerMedicineCount.innerText = player.medicine.length;
+  }
+});
