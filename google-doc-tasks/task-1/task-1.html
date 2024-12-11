@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google docs task 1. Game</title>
+    <link href="../../css/reset.css" rel="stylesheet" />
+    <link href="./task-1.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="info-wrapper">
+        <div class="health-wrapper">
+          <div class="health-bar-container">
+            <h2 class="player-name">Player</h2>
+            <div class="health-bar">
+              <div id="player-health" style="width: 100%"></div>
+            </div>
+            <p id="player-stats">
+              Health Potions: <span id="player-medicine-count">2</span> |
+              Damage: <span id="player-damage">20</span>
+            </p>
+          </div>
+          <div class="health-bar-container">
+            <h2 class="monster-name">Monster</h2>
+            <div class="health-bar">
+              <div id="monster-health" style="width: 100%"></div>
+            </div>
+            <p id="monster-stats">
+              Damage: <span id="monster-damage">10</span>
+            </p>
+          </div>
+        </div>
+        <p id="status">Press Space to Attack!</p>
+        <p id="status">Press Ctrl to Heal!</p>
+        <h3 id="game-result"></h3>
+      </div>
+      <div class="battlefield">
+        <div class="player">
+          <img src="./assets/player.png" alt="Player Character" />
+        </div>
+        <div class="monster">
+          <img src="./assets/goblin.png" alt="Monster Character" />
+          <img class="treasure" src="./assets/sword.png" alt="" />
+        </div>
+        <img id="fireball" src="./assets/fireball.png" alt="Fireball" />
+        <img id="monster-fireball" src="./assets/fireball.png" alt="Fireball" />
+      </div>
+    </div>
+
+    <script src="./task-1.js"></script>
+  </body>
+</html>
